@@ -17,18 +17,21 @@ async function main() {
     })
 
     app.post('/contact', async function(req,res) {
-        if (req.body.from === '' || req.body.subject === ''|| req.body.message === ''){
+        
+        
+        if (req.body.from === undefined || req.body.subject === undefined ){
             return res.status(400).json({error: "Field cannot be empty"})
+        } else {
+            let info = await transporter.sendMail({
+                from: req.body.from,
+                to: process.env.USER,
+                subject: req.body.subject,
+                html: `<p> ${req.body.message} </p>`
+            })
+    
+            return res.status(200).json({"message": info.response})
         }
-        let info = await transporter.sendMail({
-            from: req.body.from,
-            to: process.env.USER,
-            subject: req.body.subject,
-            html: `<h3> ${req.body.message} </h3>`
-        })
-        console.log(info.messageId)
-
-        return res.status(200).json({"message": info.response})
+        
     })
 
     app.post('/reservation', async function(req, res) {
@@ -45,7 +48,7 @@ async function main() {
 
 main().catch((err) => console.log(`An error occured ${err}`))
 
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 3002
 
 app.listen(PORT, function server(){
     console.log(`Server listening for connections on port ${PORT}`)
