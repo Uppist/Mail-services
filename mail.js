@@ -19,7 +19,7 @@ async function main() {
     app.post('/contact', async function(req,res) {
         
         
-        if (req.body.from === undefined || req.body.subject === undefined ){
+        if (req.body.from === undefined || req.body.message === undefined ){
             return res.status(400).json({error: "Field cannot be empty"})
         } else {
             let info = await transporter.sendMail({
