@@ -8,7 +8,7 @@ app.use(express.json())
 async function main() {
 
     let transporter = createTransport({
-        service: "gmail",
+        service: process.env.SERVICE,
         port: 587,
         auth: {
             user: process.env.USER,
@@ -22,7 +22,7 @@ async function main() {
         }
         let info = await transporter.sendMail({
             from: req.body.from,
-            to: "uppist.tech@gmail.com",
+            to: process.env.USER,
             subject: req.body.subject,
             html: `<h3> ${req.body.message} </h3>`
         })
