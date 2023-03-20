@@ -26,7 +26,7 @@ async function main() {
                 from: req.body.from,
                 to: process.env.USER,
                 subject: req.body.subject,
-                html: `<p> ${req.body.message} </p>`
+                html: `<p> ${req.body.from} \n ${req.body.message} </p>`
             })
     
             return res.status(200).json({"message": info.response})
