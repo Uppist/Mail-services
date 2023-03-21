@@ -37,6 +37,9 @@ async function main() {
     })
 
     app.post('/reservation', async function(req, res) {
+        if (req.body.email === undefined || req.body.phone === undefined || req.body.message === undefined) {
+            return res.status(400).json({error: "Field cannot be empty"})
+        }
         let info = await transporter.sendMail({
             from: req.body.from,
             to: "uppist.tech@gmail.com",
@@ -45,6 +48,8 @@ async function main() {
                 ${req.body.name}\n ${req.body.email} \n ${req.body.phone} \n
                 ${req.body.NOG}\n ${req.body.message}</h3>`
         })
+        return res.status(200).json({"message": info.response})
+
     })
 }
 
