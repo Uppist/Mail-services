@@ -1,9 +1,11 @@
 import express, { json } from 'express';
 import { createTransport } from "nodemailer";
+import cors  from 'cors'
 
 const app = express();
 
 app.use(express.json())
+app.use(cors())
 
 async function main() {
 
